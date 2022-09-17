@@ -73,35 +73,50 @@ public class AuthCtrl {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
+        //Estamos verificando si esa en nuestra bd..
         if (!userRepository.existsByCedula(signUpRequest.getCedula())) {
+
+            //Estamos verificando si el usuario que va registrarse esta en Fenix..
             if (personaFenix.existsByCedula(signUpRequest.getCedula())) {
-                Usuario user = new Usuario(signUpRequest.getCedula(),
-                        signUpRequest.getNombre(),
-                        signUpRequest.getApellido(),
-                        passwordEncoder.encode(signUpRequest.getContrasenia()),
-                        signUpRequest.getCorreo());
 
-                Set<String> strRoles = signUpRequest.getRoles();
-                Set<Rol> roles = new HashSet<>();
+                //Estamos comprobando que no se ingrese un correo que ya fue ingresado..
+                if(!userRepository.existsByCorreo(signUpRequest.getCorreo())){
+                    Usuario user = new Usuario(signUpRequest.getCedula(),
+                            signUpRequest.getNombre(),
+                            signUpRequest.getApellido(),
+                            passwordEncoder.encode(signUpRequest.getContrasenia()),
+                            signUpRequest.getCorreo());
 
-                if (strRoles == null || strRoles.isEmpty()) {
-                    Rol userRole = roleRepository.findByNombre(ERol.ROL_SOLICITANTE);
-                    roles.add(userRole);
+                    Set<String> strRoles = signUpRequest.getRoles();
+                    Set<Rol> roles = new HashSet<>();
+
+                    if (strRoles == null || strRoles.isEmpty()) {
+                        Rol userRole = roleRepository.findByNombre(ERol.ROL_SOLICITANTE);
+                        roles.add(userRole);
+                    }
+
+                    user.setRoles(roles);
+                    userRepository.save(user);
+
+                    return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+
+                }else{
+                    return ResponseEntity
+                            .badRequest()
+                            .body(new MessageResponse("Error: Usted no puede ingresar un correo existente!"));
                 }
 
-                user.setRoles(roles);
-                userRepository.save(user);
-
-                return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
             }else{
                 return ResponseEntity
                         .badRequest()
                         .body(new MessageResponse("Error: El usuario no esta en FENIX!"));
             }
+
         }else{
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Usuario ya esta en la BD!"));
         }
+
     }
 }
