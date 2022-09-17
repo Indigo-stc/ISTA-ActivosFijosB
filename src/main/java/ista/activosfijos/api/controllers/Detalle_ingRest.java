@@ -24,6 +24,7 @@ import ista.activosfijos.api.models.services.Detalle_ingService;
 @RequestMapping("/detalle_ingresos/")
 public class Detalle_ingRest {
 
+	private final boolean hola = false;
 	
 	@Autowired
 	private Detalle_ingService detalle_ingService;
