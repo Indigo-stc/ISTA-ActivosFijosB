@@ -31,16 +31,16 @@ public class IUsuarioServiceImpl implements IUsuarioService {
     private final RolRepositoryDao rolRepositoryDao;
     private final VerpersonafDao consultaFenix;
     
-    @Override
+    /*@Override
     public Usuario saveUser(Usuario usuarios) {
-    	
+
     	if(!usuariosDao.existsByCedula(usuarios.getCedula())) {
     		if(consultaFenix.existsByCedula(usuarios.getCedula())){
                 log.info("Guardado Nuevo usuario con la cedula {} y con nombre {} en la BD", usuarios.getCedula(), usuarios.getNombres());
                 usuarios.setContrasenia(usuarios.getContrasenia());
                // addRoleToUser(usuarios.getCedula(), "USER");
                 //usuarios.getRoles().add(new Rol ("USER"));
-                return usuariosDao.save(usuarios);  
+                return usuariosDao.save(usuarios);
             }else{
                 log.info("El usuario con la cedula {} no esta en la bda de FENIX", usuarios.getCedula());
                 return null;
@@ -49,8 +49,8 @@ public class IUsuarioServiceImpl implements IUsuarioService {
     		log.info("El usuario con la cedula {} ya esta registrado..", usuarios.getCedula());
             return null;
     	}
-    	
-    }
+
+    }*/
 
     @Override
     public Rol saveRole(Rol rol) {

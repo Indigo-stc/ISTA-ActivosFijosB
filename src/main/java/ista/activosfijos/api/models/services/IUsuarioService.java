@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface IUsuarioService extends UserDetailsService{
 
-    Usuario saveUser(Usuario usuarios);
+    //Usuario saveUser(Usuario usuarios);
     
     Rol saveRole(Rol rol);
 

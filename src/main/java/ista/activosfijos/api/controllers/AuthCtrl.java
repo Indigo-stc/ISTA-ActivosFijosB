@@ -2,6 +2,7 @@ package ista.activosfijos.api.controllers;
 
 import ista.activosfijos.api.models.dao.primary.RolRepositoryDao;
 import ista.activosfijos.api.models.dao.primary.UsuariosRepositoryDao;
+import ista.activosfijos.api.models.dao.secundary.VerpersonafDao;
 import ista.activosfijos.api.models.dtos.request.LoginRequest;
 import ista.activosfijos.api.models.dtos.request.SignupRequest;
 import ista.activosfijos.api.models.dtos.response.JwtResponse;
@@ -46,6 +47,9 @@ public class AuthCtrl {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    VerpersonafDao personaFenix;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -68,32 +72,36 @@ public class AuthCtrl {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (userRepository.existsByCedula(signUpRequest.getCedula())) {
+    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
+        if (!userRepository.existsByCedula(signUpRequest.getCedula())) {
+            if (personaFenix.existsByCedula(signUpRequest.getCedula())) {
+                Usuario user = new Usuario(signUpRequest.getCedula(),
+                        signUpRequest.getNombre(),
+                        signUpRequest.getApellido(),
+                        passwordEncoder.encode(signUpRequest.getContrasenia()),
+                        signUpRequest.getCorreo());
+
+                Set<String> strRoles = signUpRequest.getRoles();
+                Set<Rol> roles = new HashSet<>();
+
+                if (strRoles == null || strRoles.isEmpty()) {
+                    Rol userRole = roleRepository.findByNombre(ERol.ROL_SOLICITANTE);
+                    roles.add(userRole);
+                }
+
+                user.setRoles(roles);
+                userRepository.save(user);
+
+                return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+            }else{
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: El usuario no esta en FENIX!"));
+            }
+        }else{
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
+                    .body(new MessageResponse("Error: Usuario ya esta en la BD!"));
         }
-
-        // Create new user's account
-        Usuario user = new Usuario(signUpRequest.getCedula(),
-                signUpRequest.getNombre(),
-                signUpRequest.getApellido(),
-                passwordEncoder.encode(signUpRequest.getContrasenia()),
-                signUpRequest.getCorreo());
-
-        Set<String> strRoles = signUpRequest.getRoles();
-        Set<Rol> roles = new HashSet<>();
-
-        if (strRoles == null || strRoles.isEmpty()) {
-            Rol userRole = roleRepository.findByNombre(ERol.ROL_SOLICITANTE);
-            roles.add(userRole);
-        }
-
-        user.setRoles(roles);
-        userRepository.save(user);
-
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
-    private String nombre ="Jonnathan";
 }
