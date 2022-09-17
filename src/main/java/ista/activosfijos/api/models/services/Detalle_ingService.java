@@ -1,5 +1,6 @@
 package ista.activosfijos.api.models.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,16 @@ public class Detalle_ingService implements IDetalle_ingService{
 	@Override
 	public void eliminarDetalle_ing(Long id) {
 		this.detalle_ingRepository.deleteById(id);
+	}
+	
+	public List<Detalle_ing> findAllByDetalle_ings (Long id){
+		List<Detalle_ing> estadosRespuesta= new ArrayList<Detalle_ing>();
+		List<Detalle_ing> estados= detalle_ingRepository.findAll();
+		for (int i=0; i<estados.size(); i++) {
+			if (estados.get(i).getEncabezado_ing().getId_encabezado_ing()==id) {
+				estadosRespuesta.add(estados.get(i));
+			}
+		}
+		return estadosRespuesta;
 	}
 }
