@@ -34,18 +34,18 @@ public class Detalle_ingRest {
 	}
 		
 
-		@PostMapping
-		private ResponseEntity<Detalle_ing> saveDetalleIngreso (@RequestBody Detalle_ing detalle_ing){
+	@PostMapping
+	private ResponseEntity<Detalle_ing> saveDetalleIngreso (@RequestBody Detalle_ing detalle_ing){
 			
-			try {
-				Detalle_ing newDetalle_ing = detalle_ingService.guardarDetalle_ing(detalle_ing);
-				return ResponseEntity.created(new URI("/detalle_ingresos/" + newDetalle_ing.getId_detalle_ing())).body(newDetalle_ing);
+		try {
+			Detalle_ing newDetalle_ing = detalle_ingService.guardarDetalle_ing(detalle_ing);
+			return ResponseEntity.created(new URI("/detalle_ingresos/" + newDetalle_ing.getId_detalle_ing())).body(newDetalle_ing);
 
-			} catch (Exception e) {
+		} catch (Exception e) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-			}
-			
 		}
+			
+	}
 				
 		@DeleteMapping(value = "/delete/{id}")
 		public void Eliminar(@PathVariable("id") Long id) {
