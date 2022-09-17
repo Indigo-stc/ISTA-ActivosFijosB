@@ -95,4 +95,5 @@ public class AuthCtrl {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+    private String nombre ="Jonnathan";
 }
