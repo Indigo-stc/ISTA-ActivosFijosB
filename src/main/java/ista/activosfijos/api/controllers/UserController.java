@@ -28,7 +28,7 @@ public class UserController {
     //private final FiltrosAuthentication filtrosAuthentication;
    
     @GetMapping("/users/all")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('RESPONSABLE')")
     public ResponseEntity<List<Usuario>> getUsuarios(){
         return ResponseEntity.ok().body(iUsuarioService.getUsusarios());
     }

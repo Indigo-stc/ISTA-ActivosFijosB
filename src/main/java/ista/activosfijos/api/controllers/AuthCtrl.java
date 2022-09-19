@@ -7,12 +7,15 @@ import ista.activosfijos.api.models.dtos.request.LoginRequest;
 import ista.activosfijos.api.models.dtos.request.SignupRequest;
 import ista.activosfijos.api.models.dtos.response.JwtResponse;
 import ista.activosfijos.api.models.dtos.response.MessageResponse;
+import ista.activosfijos.api.models.dtos.response.UserInfoResponse;
 import ista.activosfijos.api.models.entity.primary.ERol;
 import ista.activosfijos.api.models.entity.primary.Rol;
 import ista.activosfijos.api.models.entity.primary.Usuario;
 import ista.activosfijos.api.models.entity.primary.UsuarioPrincipal;
 import ista.activosfijos.api.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -53,22 +56,31 @@ public class AuthCtrl {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getCedula(), loginRequest.getContrasenia()));
+        if(userRepository.existsByCorreo(loginRequest.getCorreo())){
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getCorreo(), loginRequest.getContrasenia()));
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            UsuarioPrincipal userDetails = (UsuarioPrincipal) authentication.getPrincipal();
+            ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
-        UsuarioPrincipal userDetails = (UsuarioPrincipal) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId_usuario(),
-                userDetails.getCedula(),
-                userDetails.getCorreo(),
-                roles));
+            List<String> roles = userDetails.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+                    .body(new UserInfoResponse(
+                    userDetails.getId_usuario(),
+                    userDetails.getCorreo(),
+                    roles));
+        }else{
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("No registrado!"));
+
+        }
+
     }
 
     @PostMapping("/signup")
@@ -119,4 +131,12 @@ public class AuthCtrl {
         }
 
     }
+
+    @PostMapping("/signout")
+    public ResponseEntity<?> logoutUser() {
+        ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+                .body(new MessageResponse("You've been signed out!"));
+    }
+
 }

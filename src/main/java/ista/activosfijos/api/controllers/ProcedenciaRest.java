@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ import ista.activosfijos.api.models.services.ProcedenciaService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
-@RequestMapping("/procedencias/")
+@RequestMapping("/api/procedencia")
 public class ProcedenciaRest {
 	
 		// 1. necesitamos los servicios y hay que llamarlos
@@ -32,25 +33,27 @@ public class ProcedenciaRest {
 	
 	
 		// 2. Aqui irian todos los metodos CRUD
-		@GetMapping
+		@GetMapping("/listar")
+		@PreAuthorize("hasRole('RESPONSABLE')")
 		public List<Procedencia> listarProcedencia () {
 			return procedenciaService.findAllProcedencia();
 		}
 	
 	
 		// GUARDAR UNA PROCEDENCIA
-		@PostMapping
+		@PostMapping("/guardar/")
+		@PreAuthorize("hasRole('RESPONSABLE')")
 		private ResponseEntity<Procedencia> saveProcedencia (@RequestBody Procedencia procedencia){
 			try {
 				Procedencia newProcedencia = procedenciaService.guardarProcedencia(procedencia);
-				return ResponseEntity.created(new URI("/procedencias/" + newProcedencia.getId_procedencia())).body(newProcedencia);
+				return ResponseEntity.created(new URI("/api/procedencias/" + newProcedencia.getId_procedencia())).body(newProcedencia);
 			} catch (Exception e) {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 			}
 		}
 		
 		// Delete 2
-		@DeleteMapping(value = "/delete/{id}")
+		@DeleteMapping(value = "/procedencias/delete/{id}")
 		public ResponseEntity<Boolean> eliminarActivo(@PathVariable("id") Long id) {
 			procedenciaService.eliminarProcedencia(id);
 			return ResponseEntity.ok(!(procedenciaService.findByIdProcedencia(id)!=null));

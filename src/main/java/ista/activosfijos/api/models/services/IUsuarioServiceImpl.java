@@ -79,13 +79,14 @@ public class IUsuarioServiceImpl implements IUsuarioService {
     } 
 
     @Override
-    public UserDetails loadUserByUsername(String cedula) throws UsernameNotFoundException {
-        Usuario user = usuariosDao.findByCedula(cedula);
+    public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
+        //Usuario user = usuariosDao.findByCedula(cedula);
+        Usuario user = usuariosDao.findByCorreo(correo);
         if (user == null){
             log.error("Ususario no esta en la base de datos..");
             throw new UsernameNotFoundException("Ususario no esta en la base de datos..");
         } else {
-            log.info("Usuarion en la base de datos: {}", cedula);
+            log.info("Usuarion en la base de datos: {}", correo);
         }
         return UsuarioPrincipal.build(user);
     }

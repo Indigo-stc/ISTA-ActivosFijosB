@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 public interface UsuariosRepositoryDao extends JpaRepository<Usuario,Long> {
 
     public Usuario findByCedula(String cedula);
+
+    public Usuario findByCorreo(String correo);
     
     Boolean existsByCedula (String cedula);
 
