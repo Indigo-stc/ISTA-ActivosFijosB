@@ -5,14 +5,16 @@ import ista.activosfijos.api.models.dao.primary.UsuariosRepositoryDao;
 import ista.activosfijos.api.models.dao.secundary.VerpersonafDao;
 import ista.activosfijos.api.models.dtos.request.LoginRequest;
 import ista.activosfijos.api.models.dtos.request.SignupRequest;
-import ista.activosfijos.api.models.dtos.response.JwtResponse;
 import ista.activosfijos.api.models.dtos.response.MessageResponse;
 import ista.activosfijos.api.models.dtos.response.UserInfoResponse;
 import ista.activosfijos.api.models.entity.primary.ERol;
 import ista.activosfijos.api.models.entity.primary.Rol;
 import ista.activosfijos.api.models.entity.primary.Usuario;
 import ista.activosfijos.api.models.entity.primary.UsuarioPrincipal;
+import ista.activosfijos.api.models.entity.secundary.verpersonaf;
+import ista.activosfijos.api.models.services.IDocenteFenixService;
 import ista.activosfijos.api.security.JwtUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -31,9 +33,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RestController
 @RequestMapping("/api/auth")
+@Slf4j
 public class AuthCtrl {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -52,6 +56,9 @@ public class AuthCtrl {
 
     @Autowired
     VerpersonafDao personaFenix;
+
+    @Autowired
+    private IDocenteFenixService docenteFenix;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -103,7 +110,7 @@ public class AuthCtrl {
                     Set<Rol> roles = new HashSet<>();
 
                     if (strRoles == null || strRoles.isEmpty()) {
-                        Rol userRole = roleRepository.findByNombre(ERol.ROL_SOLICITANTE);
+                        Rol userRole = roleRepository.findByNombre(ERol.ROLE_SOLICITANTE);
                         roles.add(userRole);
                     }
 
@@ -137,6 +144,11 @@ public class AuthCtrl {
         ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .body(new MessageResponse("You've been signed out!"));
+    }
+
+    @GetMapping("/personafenix/{cedula}")
+    public verpersonaf buscar(@PathVariable String cedula){
+        return docenteFenix.findById(cedula);
     }
 
 }

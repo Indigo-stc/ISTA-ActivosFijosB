@@ -57,26 +57,26 @@ public class UserController {
 
     //Estos datos son de fenix
 
-    @Autowired
-    private IDocenteFenixService docenteFenix;
+    /*@Autowired
+    private IDocenteFenixService docenteFenix;*/
 
     //Listar empleado------VALIDO
-    @GetMapping("/persona")
+    /*@GetMapping("/persona")
     public List<verpersonaf> indext(){
         return docenteFenix.findAll();
-    }
+    }*/
 
 
-    @GetMapping("/personafenix/{cedula}")
+    /*@GetMapping("/personafenix/{cedula}")
     public verpersonaf buscar(@PathVariable String cedula){
         return docenteFenix.findById(cedula);
-    }
+    }*/
     
     
-    @GetMapping("/users")
+   /* @GetMapping("/users")
     public List<verpersonaf> newa(){
         return docenteFenix.findAll();
-    }
+    }*/
 
 }
 

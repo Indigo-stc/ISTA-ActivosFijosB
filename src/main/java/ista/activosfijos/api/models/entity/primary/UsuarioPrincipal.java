@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Setter
@@ -31,8 +32,12 @@ public class UsuarioPrincipal implements UserDetails {
                 .map(rol -> new SimpleGrantedAuthority(rol.getNombre().name()))
                 .collect(Collectors.toList());
         return new UsuarioPrincipal(user.getId_usuario(),
-                user.getCedula(),user.getNombres(),
-                user.getApellidos(), user.getCorreo(), user.getContrasenia(), authorities);
+                user.getCedula(),
+                user.getNombres(),
+                user.getApellidos(),
+                user.getCorreo(),
+                user.getContrasenia(),
+                authorities);
     }
 
     @Override
@@ -47,7 +52,7 @@ public class UsuarioPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return cedula;
+        return correo;
     }
 
     @Override
@@ -68,6 +73,16 @@ public class UsuarioPrincipal implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        UsuarioPrincipal user = (UsuarioPrincipal) o;
+        return Objects.equals(id_usuario, user.id_usuario);
     }
 
 }

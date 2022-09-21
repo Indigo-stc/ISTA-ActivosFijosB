@@ -1,5 +1,10 @@
 package ista.activosfijos.api.models.entity.primary;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +14,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="Procedencia")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Procedencia {
 
    // Declarar la key y para que sea incremental
@@ -19,7 +28,7 @@ public class Procedencia {
 	private String nombre_procedencia;
 	private String descripcion;
 	
-	public Procedencia() {
+	/*public Procedencia() {
 	}
 	
 	public Procedencia(String nombre_procedencia, String descripcion) {
@@ -45,7 +54,7 @@ public class Procedencia {
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
+	}*/
 	
 	
 }

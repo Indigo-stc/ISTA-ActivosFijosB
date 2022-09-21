@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import org.springframework.http.ResponseCookie;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
@@ -23,9 +22,10 @@ public class JwtUtils {
     private String jwtSecret;
 
     @Value("${jwtExpirationMs}")
-    private static final long jwtExpirationMs = 300000000L;
+    private int jwtExpirationMs;
+    //private static final long jwtExpirationMs = 300000000L;
 
-    @Value("${bezkoder.app.jwtCookieName}")
+    @Value("${jwtCookieName}")
     private String jwtCookie;
 
     public String getJwtFromCookies(HttpServletRequest request) {
@@ -38,7 +38,8 @@ public class JwtUtils {
     }
 
     public ResponseCookie generateJwtCookie(UsuarioPrincipal userPrincipal) {
-        String jwt = generateTokenFromUsername(userPrincipal.getUsername());
+        //anates teniamos el userprincipal getusername
+        String jwt = generateTokenFromUsername(userPrincipal.getCorreo());
         ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
         return cookie;
     }

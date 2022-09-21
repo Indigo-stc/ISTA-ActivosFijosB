@@ -3,6 +3,8 @@ package ista.activosfijos.api.controllers;
 import java.net.URI;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +24,11 @@ import ista.activosfijos.api.models.services.ProcedenciaService;
 
 //@RequestMapping para las URL para acceder al servicio
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RestController
 @RequestMapping("/api/procedencia")
+@Slf4j
 public class ProcedenciaRest {
 	
 		// 1. necesitamos los servicios y hay que llamarlos
@@ -41,19 +45,26 @@ public class ProcedenciaRest {
 	
 	
 		// GUARDAR UNA PROCEDENCIA
-		@PostMapping("/guardar/")
+		@PostMapping("/save")
 		@PreAuthorize("hasRole('RESPONSABLE')")
-		private ResponseEntity<Procedencia> saveProcedencia (@RequestBody Procedencia procedencia){
-			try {
-				Procedencia newProcedencia = procedenciaService.guardarProcedencia(procedencia);
-				return ResponseEntity.created(new URI("/api/procedencias/" + newProcedencia.getId_procedencia())).body(newProcedencia);
-			} catch (Exception e) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-			}
+		private Procedencia saveProcedencia (@RequestBody Procedencia procedencia) {
+
+
+				log.info("Este nombre pro try {}", procedencia.getNombre_procedencia());
+				//Procedencia newProcedencia = procedenciaService.guardarProcedencia(procedencia);
+				return this.procedenciaService.guardarProcedencia(procedencia);
+				//return ResponseEntity.created(new URI("/api/procedencia/save" + newProcedencia.getId_procedencia())).body(newProcedencia);
+
+
 		}
-		
-		// Delete 2
-		@DeleteMapping(value = "/procedencias/delete/{id}")
+		/*@PreAuthorize("hasRole('RESPONSABLE')")
+		@PostMapping("/save/")
+		public Procedencia guardarEmpleado (@RequestBody Procedencia procedencia) {
+			return this.procedenciaService.guardarProcedencia(procedencia);
+		}*/
+
+	    @PreAuthorize("hasRole('RESPONSABLE')")
+		@DeleteMapping(value = "/delete/{id}")
 		public ResponseEntity<Boolean> eliminarActivo(@PathVariable("id") Long id) {
 			procedenciaService.eliminarProcedencia(id);
 			return ResponseEntity.ok(!(procedenciaService.findByIdProcedencia(id)!=null));
