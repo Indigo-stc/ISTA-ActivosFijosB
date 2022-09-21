@@ -61,8 +61,7 @@ public class SecurityConfigImpl { // extends WebSecurityConfigurerAdapter {
 				.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeRequests().antMatchers("/api/auth/**", "/api/personafenix/{cedula}").permitAll()
-				.anyRequest().authenticated()
-		;
+				.anyRequest().authenticated();
 
 		http.authenticationProvider(authenticationProvider());
 

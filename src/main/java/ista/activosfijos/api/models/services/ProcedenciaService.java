@@ -1,6 +1,7 @@
 package ista.activosfijos.api.models.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,20 @@ public class ProcedenciaService implements IProcedenciaService {
 		log.info("Tamos en el service con nom {}", procedencia.getNombre_procedencia());
 		log.info("Tamos en el service con des {}", procedencia.getDescripcion());
 		return procedenciaRepository.save(procedencia);
+	}
+
+	public boolean updateProcedencia(Procedencia procedencia) {
+		Optional<Procedencia> exists = procedenciaRepository.findById(procedencia.getId_procedencia());
+
+		if (exists.isPresent()) {
+			Procedencia procedenciaActual = exists.get();
+			procedenciaActual.setNombre_procedencia(procedencia.getNombre_procedencia());
+			procedenciaActual.setDescripcion(procedencia.getDescripcion());
+			procedenciaRepository.save(procedenciaActual);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

@@ -16,4 +16,6 @@ public interface IProcedenciaService {
 		public Procedencia findByIdProcedencia(Long id);
 				
 		public void eliminarProcedencia(Long id);
+
+
 }
