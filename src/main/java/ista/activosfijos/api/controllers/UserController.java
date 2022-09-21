@@ -19,16 +19,17 @@ import java.net.URI;
 import java.util.*;
 
 
-@CrossOrigin(origins= {"http://localhost:4200"})
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RestController
 @RequestMapping("/api")
 public class UserController {
 
+    @Autowired
     private IUsuarioService iUsuarioService;
     //private final FiltrosAuthentication filtrosAuthentication;
    
     @GetMapping("/users/all")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('RESPONSABLE')")
     public ResponseEntity<List<Usuario>> getUsuarios(){
         return ResponseEntity.ok().body(iUsuarioService.getUsusarios());
     }
@@ -57,26 +58,26 @@ public class UserController {
 
     //Estos datos son de fenix
 
-    @Autowired
-    private IDocenteFenixService docenteFenix;
+    /*@Autowired
+    private IDocenteFenixService docenteFenix;*/
 
     //Listar empleado------VALIDO
-    @GetMapping("/persona")
+    /*@GetMapping("/persona")
     public List<verpersonaf> indext(){
         return docenteFenix.findAll();
-    }
+    }*/
 
 
-    @GetMapping("/personafenix/{cedula}")
+    /*@GetMapping("/personafenix/{cedula}")
     public verpersonaf buscar(@PathVariable String cedula){
         return docenteFenix.findById(cedula);
-    }
+    }*/
     
     
-    @GetMapping("/users")
+   /* @GetMapping("/users")
     public List<verpersonaf> newa(){
         return docenteFenix.findAll();
-    }
+    }*/
 
 }
 

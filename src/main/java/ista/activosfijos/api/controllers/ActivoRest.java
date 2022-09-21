@@ -22,7 +22,7 @@ import ista.activosfijos.api.models.services.ActivoService;
 
 @CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
-@RequestMapping("/activos/")
+@RequestMapping("/api/activos/")
 public class ActivoRest {
 
 	@Autowired

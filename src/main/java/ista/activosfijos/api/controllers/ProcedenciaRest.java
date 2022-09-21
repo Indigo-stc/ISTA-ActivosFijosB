@@ -3,17 +3,13 @@ package ista.activosfijos.api.controllers;
 import java.net.URI;
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import ista.activosfijos.api.models.entity.primary.Procedencia;
 import ista.activosfijos.api.models.services.ProcedenciaService;
@@ -21,9 +17,11 @@ import ista.activosfijos.api.models.services.ProcedenciaService;
 
 //@RequestMapping para las URL para acceder al servicio
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RestController
-@RequestMapping("/procedencias/")
+@RequestMapping("/api/procedencia")
+@Slf4j
 public class ProcedenciaRest {
 	
 		// 1. necesitamos los servicios y hay que llamarlos
@@ -32,24 +30,28 @@ public class ProcedenciaRest {
 	
 	
 		// 2. Aqui irian todos los metodos CRUD
-		@GetMapping
+		@GetMapping("/listar")
+		@PreAuthorize("hasRole('RESPONSABLE')")
 		public List<Procedencia> listarProcedencia () {
 			return procedenciaService.findAllProcedencia();
 		}
 	
 	
 		// GUARDAR UNA PROCEDENCIA
-		@PostMapping
-		private ResponseEntity<Procedencia> saveProcedencia (@RequestBody Procedencia procedencia){
-			try {
-				Procedencia newProcedencia = procedenciaService.guardarProcedencia(procedencia);
-				return ResponseEntity.created(new URI("/procedencias/" + newProcedencia.getId_procedencia())).body(newProcedencia);
-			} catch (Exception e) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-			}
+
+		@PreAuthorize("hasRole('RESPONSABLE')")
+		@PostMapping("/save")
+		public Procedencia guardarEmpleado (@RequestBody Procedencia procedencia) {
+			return this.procedenciaService.guardarProcedencia(procedencia);
 		}
-		
-		// Delete 2
+
+		@PutMapping("/update/pro")
+		public ResponseEntity<?> updateProcedencia(@RequestBody Procedencia procedencia) {
+			procedenciaService.updateProcedencia(procedencia);
+			return new ResponseEntity<>(("Procedencia Guardado"), HttpStatus.CREATED);
+		}
+
+	    @PreAuthorize("hasRole('RESPONSABLE')")
 		@DeleteMapping(value = "/delete/{id}")
 		public ResponseEntity<Boolean> eliminarActivo(@PathVariable("id") Long id) {
 			procedenciaService.eliminarProcedencia(id);
