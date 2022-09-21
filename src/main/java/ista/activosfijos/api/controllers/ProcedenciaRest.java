@@ -18,7 +18,7 @@ import ista.activosfijos.api.models.services.ProcedenciaService;
 //@RequestMapping para las URL para acceder al servicio
 
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, b="true")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RestController
 @RequestMapping("/api/procedencia")
 @Slf4j
