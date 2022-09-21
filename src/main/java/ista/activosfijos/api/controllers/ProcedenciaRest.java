@@ -3,20 +3,15 @@ package ista.activosfijos.api.controllers;
 import java.net.URI;
 import java.util.List;
 
+import ista.activosfijos.api.models.dao.primary.ProcedenciaRepository;
+import ista.activosfijos.api.models.dtos.response.MessageResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ista.activosfijos.api.models.entity.primary.Procedencia;
 import ista.activosfijos.api.models.services.ProcedenciaService;
@@ -34,6 +29,9 @@ public class ProcedenciaRest {
 		// 1. necesitamos los servicios y hay que llamarlos
 		@Autowired
 		private ProcedenciaService procedenciaService;
+
+		@Autowired
+		private ProcedenciaRepository procedenciaRepository;
 	
 	
 		// 2. Aqui irian todos los metodos CRUD
@@ -47,16 +45,37 @@ public class ProcedenciaRest {
 		// GUARDAR UNA PROCEDENCIA
 		@PostMapping("/save")
 		@PreAuthorize("hasRole('RESPONSABLE')")
-		private Procedencia saveProcedencia (@RequestBody Procedencia procedencia) {
+		private ResponseEntity<?> saveProcedencia (@RequestBody Procedencia procedencia) {
+			log.info("Tamos en el service con id {}", procedencia.getId_procedencia());
+			log.info("Tamos en el service con nom {}", procedencia.getNombre_procedencia());
+			log.info("Tamos en el service con des {}", procedencia.getDescripcion());
 
+			if(procedencia.getId_procedencia() == 0){
+				Procedencia proce = new Procedencia(procedencia.getNombre_procedencia(), procedencia.getDescripcion());
+				procedenciaRepository.save(proce);
+				return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+			}else{
+				Procedencia proce = new Procedencia(procedencia.getId_procedencia(), procedencia.getNombre_procedencia(), procedencia.getDescripcion());
+				procedenciaRepository.save(proce);
+				return ResponseEntity.ok(new MessageResponse("User update successfully!"));
 
-				log.info("Este nombre pro try {}", procedencia.getNombre_procedencia());
-				//Procedencia newProcedencia = procedenciaService.guardarProcedencia(procedencia);
-				return this.procedenciaService.guardarProcedencia(procedencia);
-				//return ResponseEntity.created(new URI("/api/procedencia/save" + newProcedencia.getId_procedencia())).body(newProcedencia);
-
+			}
 
 		}
+
+
+
+	@PutMapping("/actualizar/{id}")
+	@PreAuthorize("hasRole('RESPONSABLE')")
+	public Procedencia update(@RequestBody Procedencia procedencia, @PathVariable Long id) {
+
+		Procedencia procedenciaActual = procedenciaService.findByIdProcedencia(id);
+
+		procedenciaActual.setNombre_procedencia(procedencia.getNombre_procedencia());
+		procedenciaActual.setDescripcion(procedencia.getDescripcion());
+
+		return procedenciaService.guardarProcedencia(procedenciaActual);
+	}
 		/*@PreAuthorize("hasRole('RESPONSABLE')")
 		@PostMapping("/save/")
 		public Procedencia guardarEmpleado (@RequestBody Procedencia procedencia) {
