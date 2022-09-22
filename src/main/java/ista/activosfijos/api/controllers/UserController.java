@@ -14,29 +14,19 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.*;
 
-
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
     private IUsuarioService iUsuarioService;
-    //private final FiltrosAuthentication filtrosAuthentication;
    
-    @GetMapping("/users/all")
+    @GetMapping("/all")
     @PreAuthorize("hasRole('RESPONSABLE')")
     public ResponseEntity<List<Usuario>> getUsuarios(){
         return ResponseEntity.ok().body(iUsuarioService.getUsusarios());
     }
- 
-    /*@PostMapping("/users/save")
-    public ResponseEntity<Usuarios> guardarUser(@RequestBody Usuarios usuarios){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/save").toUriString());
-        Rol rol = new Rol(62L, "USER");
-        usuarios.setRoles(Arrays.asList(rol));
-        return ResponseEntity.created(uri).body(iUsuarioService.saveUser(usuarios));
-    }*/
 
     @PostMapping("/rol/save")
     @PreAuthorize("hasRole('ADMIN')")
@@ -52,28 +42,29 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    //Estos datos son de fenix
-
-    /*@Autowired
-    private IDocenteFenixService docenteFenix;*/
-
-    //Listar empleado------VALIDO
-    /*@GetMapping("/persona")
-    public List<verpersonaf> indext(){
-        return docenteFenix.findAll();
-    }*/
+    @GetMapping("/search/{id}")
+    public Usuario show(@PathVariable long id) {
+        return iUsuarioService.findById(id);
+    }
 
 
-    /*@GetMapping("/personafenix/{cedula}")
-    public verpersonaf buscar(@PathVariable String cedula){
-        return docenteFenix.findById(cedula);
-    }*/
-    
-    
-   /* @GetMapping("/users")
-    public List<verpersonaf> newa(){
-        return docenteFenix.findAll();
-    }*/
+    //Metodos de Esteban ------------------------------------------------
+
+    @GetMapping
+    public List<Usuario> listarUsuarios() {
+        return iUsuarioService.findAllUsuario();
+    }
+
+    @GetMapping("{cedula}")
+    public ResponseEntity<List<Usuario>> getAllUserByCedula(@PathVariable("cedula") String cedula) {
+        return ResponseEntity.ok(iUsuarioService.buscarUsuario(cedula));
+
+    }
+
+    @GetMapping(value = "/buscar/{id}")
+    public Usuario findById(@PathVariable("id") Long id) {
+        return this.iUsuarioService.findByIdUsuario(id);
+    }
 
 }
 

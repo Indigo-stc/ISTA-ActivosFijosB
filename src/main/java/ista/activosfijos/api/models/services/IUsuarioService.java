@@ -23,5 +23,9 @@ public interface IUsuarioService extends UserDetailsService{
     public List<Usuario> findAllUsuario();
 	
 	List<Usuario> buscarUsuario(String cedula);
+
+    public Usuario findById(Long id);
+
+    public Usuario findByIdUsuario(Long id);
     
 }

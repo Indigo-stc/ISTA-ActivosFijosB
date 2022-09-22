@@ -29,28 +29,6 @@ public class IUsuarioServiceImpl implements IUsuarioService {
 
     private final UsuariosRepositoryDao usuariosDao;
     private final RolRepositoryDao rolRepositoryDao;
-    private final VerpersonafDao consultaFenix;
-    
-    /*@Override
-    public Usuario saveUser(Usuario usuarios) {
-
-    	if(!usuariosDao.existsByCedula(usuarios.getCedula())) {
-    		if(consultaFenix.existsByCedula(usuarios.getCedula())){
-                log.info("Guardado Nuevo usuario con la cedula {} y con nombre {} en la BD", usuarios.getCedula(), usuarios.getNombres());
-                usuarios.setContrasenia(usuarios.getContrasenia());
-               // addRoleToUser(usuarios.getCedula(), "USER");
-                //usuarios.getRoles().add(new Rol ("USER"));
-                return usuariosDao.save(usuarios);
-            }else{
-                log.info("El usuario con la cedula {} no esta en la bda de FENIX", usuarios.getCedula());
-                return null;
-            }
-    	}else {
-    		log.info("El usuario con la cedula {} ya esta registrado..", usuarios.getCedula());
-            return null;
-    	}
-
-    }*/
 
     @Override
     public Rol saveRole(Rol rol) {
@@ -92,27 +70,41 @@ public class IUsuarioServiceImpl implements IUsuarioService {
     }
     
     //Metodos generados-------------------------------------------------------------------
-	
-	// EXTRA LOS DATOS DE USUARIO
-		public List<Usuario> findAllByName (String cedula){
-			List<Usuario> estadosRespuesta= new ArrayList<>();
-			List<Usuario> user = usuariosDao.findAll();
-			for (int i=0; i<user.size(); i++) {
-				if (user.get(i).getCedula() == cedula) {
-					estadosRespuesta.add(user.get(i));
-				}
-			}
-			return estadosRespuesta;
-		}
 
-	@Override
-	public List<Usuario> findAllUsuario() {
-		return (List<Usuario>) usuariosDao.findAll();
-	}
+    // EXTRA LOS DATOS DE USUARIO
+    public List<Usuario> findAllByName (String cedula){
+        List<Usuario> estadosRespuesta= new ArrayList<>();
+        List<Usuario> user = usuariosDao.findAll();
+        for (int i=0; i<user.size(); i++) {
+            if (user.get(i).getCedula().toString() == cedula) {
+                estadosRespuesta.add(user.get(i));
+            }
+        }
+        return estadosRespuesta;
+    }
 
-	@Override
-	public List<Usuario> buscarUsuario(String cedula) {
-		return usuariosDao.buscarUsuario(cedula);
-	}
+
+    @Override
+    public List<Usuario> findAllUsuario() {
+        return (List<Usuario>) usuariosDao.findAll();
+    }
+
+    @Override
+    @Transactional (readOnly= true)
+    public Usuario findByIdUsuario(Long id) {
+        return usuariosDao.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Usuario> buscarUsuario(String cedula) {
+        return usuariosDao.buscarUsuario(cedula);
+    }
+
+    //Implementación de los nuevos metodos del grupo de josé..
+    @Override
+    public Usuario findById(Long id) {
+        // TODO Auto-generated method stub
+        return usuariosDao.findById(id).orElse(null);
+    }
 
 }
