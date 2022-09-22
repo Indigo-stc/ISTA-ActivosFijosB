@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 public class LoginRequest {
 
     @NotBlank
-    private String cedula;
+    private String correo;
     @NotBlank
     private String contrasenia;
 

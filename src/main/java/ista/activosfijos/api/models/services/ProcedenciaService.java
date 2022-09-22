@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ista.activosfijos.api.models.dao.primary.ProcedenciaRepository;
@@ -16,7 +17,6 @@ public class ProcedenciaService implements IProcedenciaService {
 	@Autowired
 	private ProcedenciaRepository procedenciaRepository;
 
-	
 	public List<Procedencia>  List() {
 		return (List<Procedencia>) procedenciaRepository.findAll();
 	}

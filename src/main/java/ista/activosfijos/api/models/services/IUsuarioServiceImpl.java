@@ -31,16 +31,16 @@ public class IUsuarioServiceImpl implements IUsuarioService {
     private final RolRepositoryDao rolRepositoryDao;
     private final VerpersonafDao consultaFenix;
     
-    @Override
+    /*@Override
     public Usuario saveUser(Usuario usuarios) {
-    	
+
     	if(!usuariosDao.existsByCedula(usuarios.getCedula())) {
     		if(consultaFenix.existsByCedula(usuarios.getCedula())){
                 log.info("Guardado Nuevo usuario con la cedula {} y con nombre {} en la BD", usuarios.getCedula(), usuarios.getNombres());
                 usuarios.setContrasenia(usuarios.getContrasenia());
                // addRoleToUser(usuarios.getCedula(), "USER");
                 //usuarios.getRoles().add(new Rol ("USER"));
-                return usuariosDao.save(usuarios);  
+                return usuariosDao.save(usuarios);
             }else{
                 log.info("El usuario con la cedula {} no esta en la bda de FENIX", usuarios.getCedula());
                 return null;
@@ -49,8 +49,8 @@ public class IUsuarioServiceImpl implements IUsuarioService {
     		log.info("El usuario con la cedula {} ya esta registrado..", usuarios.getCedula());
             return null;
     	}
-    	
-    }
+
+    }*/
 
     @Override
     public Rol saveRole(Rol rol) {
@@ -79,13 +79,14 @@ public class IUsuarioServiceImpl implements IUsuarioService {
     } 
 
     @Override
-    public UserDetails loadUserByUsername(String cedula) throws UsernameNotFoundException {
-        Usuario user = usuariosDao.findByCedula(cedula);
+    public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
+        //Usuario user = usuariosDao.findByCedula(cedula);
+        Usuario user = usuariosDao.findByCorreo(correo);
         if (user == null){
             log.error("Ususario no esta en la base de datos..");
             throw new UsernameNotFoundException("Ususario no esta en la base de datos..");
         } else {
-            log.info("Usuarion en la base de datos: {}", cedula);
+            log.info("Usuarion en la base de datos: {}", correo);
         }
         return UsuarioPrincipal.build(user);
     }
