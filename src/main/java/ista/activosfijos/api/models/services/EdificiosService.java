@@ -1,6 +1,7 @@
 package ista.activosfijos.api.models.services;
-import java.util.List;
 
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,5 +37,19 @@ public class EdificiosService  implements IEdificiosService {
 	@Override
 	public void eliminarEdificio(Long id) {
 		this.edificioRepository.deleteById(id);
+	}
+	
+	public boolean updateEdificio (Edificio edificio) {
+	    Optional<Edificio> exists = edificioRepository.findById(edificio.getId_edificio());
+	      if (exists.isPresent()) {
+	    	  Edificio edificioActual = exists.get();
+	    	  edificioActual.setNombre_edificio(edificio.getNombre_edificio());
+	    	  edificioActual.setDescripcion(edificio.getDescripcion());
+	    	  edificioRepository.save(edificioActual);
+
+	            return true;
+	      } else {
+	        	return false;
+	     }
 	}
 }

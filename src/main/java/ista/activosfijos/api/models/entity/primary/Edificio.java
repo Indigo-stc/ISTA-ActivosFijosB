@@ -1,12 +1,11 @@
 package ista.activosfijos.api.models.entity.primary;
 
-import java.util.List;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -23,9 +22,9 @@ public class Edificio {
 	private String nombre_edificio;
 	private String descripcion;
 	
-	@OneToMany(mappedBy = "edificio")
-	private List<Departamento> departamento;
-	
+//	@OneToMany(mappedBy = "edificio")
+//	private List<Departamento> departamento;
+//	
 	
 	public Edificio() {
 		super();

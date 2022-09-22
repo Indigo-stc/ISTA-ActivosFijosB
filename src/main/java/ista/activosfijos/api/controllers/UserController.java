@@ -4,13 +4,9 @@ import ista.activosfijos.api.models.entity.primary.Rol;
 import ista.activosfijos.api.models.entity.primary.Usuario;
 import ista.activosfijos.api.models.entity.secundary.verpersonaf;
 import ista.activosfijos.api.models.services.IUsuarioService;
-import ista.activosfijos.api.models.services.IUsuarioServiceImpl;
 import ista.activosfijos.api.models.services.IDocenteFenixService;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
