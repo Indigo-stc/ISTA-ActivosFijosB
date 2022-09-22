@@ -1,4 +1,6 @@
 package ista.activosfijos.api.controllers;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,12 @@ public class Encabezado_ingRest {
 
 	@Autowired
 	private Encabezado_ingService encabezado_ingService;
+	
+	@GetMapping("/listarEncabezadoIngresos")
+	public List<Encabezado_ing> listarEncabezado_ing(){
+		return encabezado_ingService.findAllEncabezado_ing();
+	}
+	
 	
 	@PostMapping("/guardarEncabezadoIngresos")
 	public Encabezado_ing guardarEncabezado_ing(@RequestBody Encabezado_ing encabezado_ing) {
