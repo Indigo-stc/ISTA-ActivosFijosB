@@ -16,6 +16,10 @@ public class Detalle_ingService implements IDetalle_ingService{
 
 	@Autowired
 	private Detalle_ingRepository detalle_ingRepository;
+	
+	public List<Detalle_ing> findBynum_recep(String num_recep) {
+		return detalle_ingRepository.findBynum_recep(num_recep);
+	}
 
 	@Override
 	@Transactional (readOnly= true)
@@ -49,4 +53,5 @@ public class Detalle_ingService implements IDetalle_ingService{
 		}
 		return estadosRespuesta;
 	}
+	
 }

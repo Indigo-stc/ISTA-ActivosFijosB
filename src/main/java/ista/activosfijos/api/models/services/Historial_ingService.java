@@ -1,13 +1,11 @@
 package ista.activosfijos.api.models.services;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import ista.activosfijos.api.models.dao.primary.Historial_ingRepository;
 import ista.activosfijos.api.models.entity.primary.Historial_ing;
+import ista.activosfijos.api.models.dao.primary.Historial_ingRepository;
 
 @Service
 public class Historial_ingService implements IHistorial_ingService {
@@ -36,4 +34,5 @@ public class Historial_ingService implements IHistorial_ingService {
 	public void eliminarHistorial_ing(Long id) {
 		this.historial_ingRepository.deleteById(id);
 	}
+	
 }

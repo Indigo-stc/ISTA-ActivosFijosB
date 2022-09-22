@@ -2,7 +2,7 @@ package ista.activosfijos.api.models.services;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +40,6 @@ public class DepartamentosService implements IDepartamentosService {
 		this.departamentoRepository.deleteById(id);
 	}
 	
-	// EXTRA para hacer el combo anidado
 	public List<Departamento> findAllByEdificio (Long id){
 		List<Departamento> estadosRespuesta= new ArrayList<>();
 		List<Departamento> estados= departamentoRepository.findAll();
@@ -50,5 +49,20 @@ public class DepartamentosService implements IDepartamentosService {
 			}
 		}
 		return estadosRespuesta;
+	}
+	
+	public boolean updateDepartamento (Departamento departamento) {
+	      Optional<Departamento> exists = departamentoRepository.findById(departamento.getId_departamento());
+	        
+	      if (exists.isPresent()) {
+	    	  Departamento departamentoActual = exists.get();
+		    	  departamentoActual.setNombre_departamento(departamento.getNombre_departamento());
+		    	  departamentoActual.setDescripcion(departamento.getDescripcion());
+		    	  departamentoActual.setEdificio(departamento.getEdificio());
+		    	  departamentoRepository.save(departamentoActual);
+	            return true;
+	      } else {
+	        	return false;
+	     }
 	}
 }

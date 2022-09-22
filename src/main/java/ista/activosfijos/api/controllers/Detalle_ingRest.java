@@ -1,10 +1,7 @@
 package ista.activosfijos.api.controllers;
 
-import java.net.URI;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,48 +16,46 @@ import ista.activosfijos.api.models.entity.primary.Detalle_ing;
 import ista.activosfijos.api.models.services.Detalle_ingService;
 
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RestController
-@RequestMapping("/detalle_ingresos/")
+@RequestMapping("/api/detalleIngresos/")
 public class Detalle_ingRest {
 
-	private final boolean troyano = false;
 	
 	@Autowired
 	private Detalle_ingService detalle_ingService;
 	
-	@GetMapping
+	@GetMapping("/buscarNumRecep/{num_recep}")
+	public ResponseEntity<List<Detalle_ing>> Buscarnum_recep(@PathVariable("num_recep") String num_recep) {
+		return ResponseEntity.ok(detalle_ingService.findBynum_recep(num_recep));
+
+	}
+	
+	@GetMapping("/listarDetalleIngresos")
 	public List<Detalle_ing> listarDetalleIngreos(){
 		return detalle_ingService.findAllDetalle_ing();
 	}
 		
-
-	@PostMapping
-	private ResponseEntity<Detalle_ing> saveDetalleIngreso (@RequestBody Detalle_ing detalle_ing){
-			
-		try {
-			Detalle_ing newDetalle_ing = detalle_ingService.guardarDetalle_ing(detalle_ing);
-			return ResponseEntity.created(new URI("/detalle_ingresos/" + newDetalle_ing.getId_detalle_ing())).body(newDetalle_ing);
-
-		} catch (Exception e) {
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
-			
+	@PostMapping("/guardarDetalleIngresos")
+	public Detalle_ing guardarDetalle_ing(@RequestBody Detalle_ing detalle_ing) {
+		return this.detalle_ingService.guardarDetalle_ing(detalle_ing);
+	}
+	
+	@GetMapping ("/filtrarDetalleIngresos/{id}")
+		public ResponseEntity<List<Detalle_ing>> getAllDDetalleEncab (@PathVariable("id") Long id){
+			return ResponseEntity.ok(detalle_ingService.findAllByDetalle_ings(id));
 	}
 				
-		@DeleteMapping(value = "/delete/{id}")
-		public void Eliminar(@PathVariable("id") Long id) {
-			detalle_ingService.eliminarDetalle_ing(id);
-		}
-		
-		//**************************************************************************************
-		
-		@GetMapping(value = "/buscar/{id}")
-		public Detalle_ing findById(@PathVariable("id") Long id) {
-			 return this.detalle_ingService.findByIdDetalle_ing(id);
-		}
-		
-		//***************************************************************************************
+	@DeleteMapping(value = "/eliminarDetalleIngresos/{id}")
+	public void Eliminar(@PathVariable("id") Long id) {
+		detalle_ingService.eliminarDetalle_ing(id);
+	}
 	
+	
+	@GetMapping(value = "/buscarDetalleIngresosPorId/{id}")
+	public Detalle_ing findById(@PathVariable("id") Long id) {
+		 return this.detalle_ingService.findByIdDetalle_ing(id);
+	}	
+		
 
 }
