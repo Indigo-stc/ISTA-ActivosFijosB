@@ -3,6 +3,7 @@ package ista.activosfijos.api.models.services;
 import ista.activosfijos.api.models.dao.primary.RolRepositoryDao;
 import ista.activosfijos.api.models.dao.primary.UsuariosRepositoryDao;
 import ista.activosfijos.api.models.dao.secundary.VerpersonafDao;
+import ista.activosfijos.api.models.entity.primary.ERol;
 import ista.activosfijos.api.models.entity.primary.Rol;
 import ista.activosfijos.api.models.entity.primary.UsuarioPrincipal;
 import ista.activosfijos.api.models.entity.primary.Usuario;
@@ -37,11 +38,22 @@ public class IUsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-    public void addRoleToUser(String cedula, String nombreRol) {
-        /*log.info("Añadido rol {} a usuario {}", nombreRol, cedula);
-        Usuarios usuarios = usuariosDao.findByCedula(cedula);
+    public void addRoleToUser(String cedula, ERol nombreRol) {
+        log.info("Añadido rol {} a usuario {}", nombreRol, cedula);
+        Usuario usuarios = usuariosDao.findByCedula(cedula);
         Rol rol = rolRepositoryDao.findByNombre(nombreRol);
-        usuarios.getRoles().add(rol);*/
+        log.info("rol: {}", rol.getNombre());
+        usuarios.getRoles().add(rol);
+    }
+
+    @Override
+    public void removeRoleToUser(String cedula, ERol nombreRol) {
+        log.info("Eliminado rol {} a usuario {}", nombreRol, cedula);
+        Usuario usuarios = usuariosDao.findByCedula(cedula);
+        Rol rol = rolRepositoryDao.findByNombre(nombreRol);
+        log.info("rol: {}", rol.getNombre());
+        usuarios.getRoles().remove((ERol) nombreRol);
+        log.error("roles", usuarios.getRoles());
     }
 
     @Override

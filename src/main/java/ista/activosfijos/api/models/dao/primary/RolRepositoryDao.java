@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface RolRepositoryDao extends JpaRepository<Rol,Long> {
 
-    public Rol findByNombre(ERol nombre);
+    Rol findByNombre(ERol nombre);
 
     //Optional<Rol> findByName(ERol name);
 }

@@ -1,5 +1,6 @@
 package ista.activosfijos.api.models.services;
 
+import ista.activosfijos.api.models.entity.primary.ERol;
 import ista.activosfijos.api.models.entity.primary.Rol;
 import ista.activosfijos.api.models.entity.primary.Usuario;
 
@@ -14,7 +15,8 @@ public interface IUsuarioService extends UserDetailsService{
     
     Rol saveRole(Rol rol);
 
-    void addRoleToUser(String cedula, String nombreRol);
+    void addRoleToUser(String cedula, ERol nombreRol);
+    void removeRoleToUser(String cedula, ERol nombreRol);
 
     Usuario getUsuario(String cedula);
 

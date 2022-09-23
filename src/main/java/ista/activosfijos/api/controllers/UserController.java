@@ -1,11 +1,14 @@
 package ista.activosfijos.api.controllers;
 
+import ista.activosfijos.api.models.entity.primary.ERol;
 import ista.activosfijos.api.models.entity.primary.Rol;
 import ista.activosfijos.api.models.entity.primary.Usuario;
 import ista.activosfijos.api.models.entity.secundary.verpersonaf;
 import ista.activosfijos.api.models.services.IUsuarioService;
 import ista.activosfijos.api.models.services.IDocenteFenixService;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +20,7 @@ import java.util.*;
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RestController
 @RequestMapping("/api/user")
+
 public class UserController {
 
     @Autowired
@@ -36,9 +40,19 @@ public class UserController {
     }
 
     @PostMapping("/rol/addtouser")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('RESPONSABLE')")
     public ResponseEntity<?> addRoletoUser(@RequestBody RolToUserForm form){
         iUsuarioService.addRoleToUser(form.getCedula(), form.getRolname());
+        return ResponseEntity.ok().build();
+    }
+
+    //@DeleteMapping("/rol/deletetouser")
+    //@PutMapping("/rol/deletetouser")
+
+    @PostMapping("/rol/deletetouser")
+    @PreAuthorize("hasRole('RESPONSABLE')")
+    public ResponseEntity<?> removeRoletoUser(@RequestBody RolToUserForm form){
+        iUsuarioService.removeRoleToUser(form.getCedula(), form.getRolname());
         return ResponseEntity.ok().build();
     }
 
@@ -68,8 +82,21 @@ public class UserController {
 
 }
 
-@Data
+@Getter
+@Setter
 class RolToUserForm {
+    String rolnombre;
     private String cedula;
-    private String rolname;
+    private ERol rolname;
+
+    public RolToUserForm(String rolnombre, String cedula) {
+        this.rolnombre = rolnombre;
+        this.cedula = cedula;
+
+        if(rolnombre.equals("ROLE_CONSTATANTE")){
+            this.rolname = ERol.ROLE_CONSTATANTE;
+        }else if(rolnombre.equals("ROLE_RESPONSABLE")){
+            this.rolname = ERol.ROLE_RESPONSABLE;
+        }
+    }
 }
