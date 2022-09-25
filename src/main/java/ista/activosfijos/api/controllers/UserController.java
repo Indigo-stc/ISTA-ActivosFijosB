@@ -46,6 +46,7 @@ public class UserController {
         return ResponseEntity.created(uri).body(iUsuarioService.saveRole(rol));
     }
 
+   //AGREGA Y QUITA ROLES
     @PutMapping("/rol/addtouser")
     @PreAuthorize("hasRole('RESPONSABLE')")
     public ResponseEntity<?> addRoletoUser(@RequestBody RolToUser usuario){
