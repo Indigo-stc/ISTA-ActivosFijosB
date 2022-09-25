@@ -53,5 +53,10 @@ public class DepartamentosRest {
     public ResponseEntity<?> updateDepartamento(@RequestBody Departamento departamento) {
 		departamentoService.updateDepartamento(departamento);
        return new ResponseEntity<>(("Actualizado"), HttpStatus.CREATED);
-	}	
+	}
+
+	@GetMapping("/buscarDepartamentoPorEdifcio/{id}")
+	public ResponseEntity<List<Departamento>> buscarDepartametoPorEdificio(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(departamentoService.buscarDepartamentoPorEdifico(id));
+	}
 }

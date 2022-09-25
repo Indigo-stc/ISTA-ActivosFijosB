@@ -16,4 +16,6 @@ public interface IDepartamentosService {
 			
 	public void eliminarDepartamento(Long id);
 
+	List<Departamento> buscarDepartamentoPorEdifico(Long id);
+
 }

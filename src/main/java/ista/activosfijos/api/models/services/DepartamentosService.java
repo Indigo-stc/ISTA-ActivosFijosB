@@ -65,4 +65,9 @@ public class DepartamentosService implements IDepartamentosService {
 	        	return false;
 	     }
 	}
+
+
+	public List<Departamento> buscarDepartamentoPorEdifico(Long id) {
+		return departamentoRepository.buscarDepartamentoPorEdifico(id);
+	}
 }
