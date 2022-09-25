@@ -19,24 +19,23 @@ import lombok.Data;
 		})
 
 public class Detalle_ing {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_detalle_ing;
-	
+
 	private String codigoA;
 	private String descripcion;
 	private Boolean estado_detalle;
-	
+
 	@ManyToOne
 	@JoinColumn(name="id_encabezado_ing")
 	private Encabezado_ing encabezado_ing;
 
-	
+
 	public Detalle_ing() {
 		super();
 	}
-	
+
 	public Detalle_ing(String codigoA, String descripcion, Boolean estado_detalle, Encabezado_ing encabezado_ing) {
 		super();
 		this.codigoA = codigoA;
@@ -44,8 +43,7 @@ public class Detalle_ing {
 		this.estado_detalle = estado_detalle;
 		this.encabezado_ing = encabezado_ing;
 	}
-	
-	
+
 	public long getId_detalle_ing() {
 		return id_detalle_ing;
 	}
@@ -70,6 +68,14 @@ public class Detalle_ing {
 		this.descripcion = descripcion;
 	}
 
+	public Boolean getEstado_detalle() {
+		return estado_detalle;
+	}
+
+	public void setEstado_detalle(Boolean estado_detalle) {
+		this.estado_detalle = estado_detalle;
+	}
+
 	public Encabezado_ing getEncabezado_ing() {
 		return encabezado_ing;
 	}
@@ -77,21 +83,5 @@ public class Detalle_ing {
 	public void setEncabezado_ing(Encabezado_ing encabezado_ing) {
 		this.encabezado_ing = encabezado_ing;
 	}
-
-	public boolean isestado_detalle() {
-		return estado_detalle;
-	}
-
-	public void setestado_detalle(boolean estado_detalle) {
-		this.estado_detalle = estado_detalle;
-	}
-			
-
-
-	
-
-
-
-
 	
 }

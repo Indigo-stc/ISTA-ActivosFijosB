@@ -18,7 +18,7 @@ import ista.activosfijos.api.models.services.Detalle_ingService;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RestController
-@RequestMapping("/api/detalleIngresos/")
+@RequestMapping("/api/detalleIngresos")
 public class Detalle_ingRest {
 
 	
