@@ -38,23 +38,11 @@ public class IUsuarioServiceImpl implements IUsuarioService {
     }
 
     @Override
-    public void addRoleToUser(String cedula, ERol nombreRol) {
-        log.info("Añadido rol {} a usuario {}", nombreRol, cedula);
-        Usuario usuarios = usuariosDao.findByCedula(cedula);
-        Rol rol = rolRepositoryDao.findByNombre(nombreRol);
-        log.info("rol: {}", rol.getNombre());
-        usuarios.getRoles().add(rol);
+    public void addRoleToUser(Usuario usuario) {
+        log.info("Añadido rol {} a usuario {}", usuario.getRoles(), usuario.getCedula());
+        usuariosDao.save(usuario);
     }
 
-    @Override
-    public void removeRoleToUser(String cedula, ERol nombreRol) {
-        log.info("Eliminado rol {} a usuario {}", nombreRol, cedula);
-        Usuario usuarios = usuariosDao.findByCedula(cedula);
-        Rol rol = rolRepositoryDao.findByNombre(nombreRol);
-        log.info("rol: {}", rol.getNombre());
-        usuarios.getRoles().remove((ERol) nombreRol);
-        log.error("roles", usuarios.getRoles());
-    }
 
     @Override
     public Usuario getUsuario(String cedula) {

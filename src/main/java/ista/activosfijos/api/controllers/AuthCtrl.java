@@ -110,7 +110,7 @@ public class AuthCtrl {
                     Set<Rol> roles = new HashSet<>();
 
                     if (strRoles == null || strRoles.isEmpty()) {
-                        Rol userRole = roleRepository.findByNombre(ERol.ROLE_SOLICITANTE);
+                        Rol userRole = roleRepository.findbynombre("ROLE_SOLICITANTE");
                         roles.add(userRole);
                     }
 

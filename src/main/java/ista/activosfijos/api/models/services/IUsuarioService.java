@@ -15,8 +15,7 @@ public interface IUsuarioService extends UserDetailsService{
     
     Rol saveRole(Rol rol);
 
-    void addRoleToUser(String cedula, ERol nombreRol);
-    void removeRoleToUser(String cedula, ERol nombreRol);
+    void addRoleToUser(Usuario usuario);
 
     Usuario getUsuario(String cedula);
 
