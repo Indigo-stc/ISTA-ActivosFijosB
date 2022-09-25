@@ -1,5 +1,7 @@
 package ista.activosfijos.api.models.entity.primary;
 
+import lombok.*;
+
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -12,18 +14,18 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Historial_ing")
+@Table(name="historial_ing")
 public class Historial_ing {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long historial_ing;
+	private long id_historial_ing;
 	
 	private String estado_fisico;
 	private Date fecha_ingreso;
 	
 	@ManyToOne
 	@JoinColumn(name="id_usuario")
-	private Usuario uResponsable;
+	private Usuario id_responsable;
 	
 	@ManyToOne
 	@JoinColumn(name="id_departamento")
@@ -38,29 +40,15 @@ public class Historial_ing {
 	private Activo id_activo;
 
 	public Historial_ing() {
-		super();
 	}
 
-	public Historial_ing(String estado_fisico, Date fecha_ingreso, Usuario uResponsable, Departamento id_departamento,
-			Detalle_ing id_detalle_ing, Activo id_activo) {
-		super();
-		this.estado_fisico = estado_fisico;
-		this.fecha_ingreso = fecha_ingreso;
-		this.uResponsable = uResponsable;
-		this.id_departamento = id_departamento;
-		this.id_detalle_ing = id_detalle_ing;
-		this.id_activo = id_activo;
+	public long getId_historial_ing() {
+		return id_historial_ing;
 	}
 
-	public long getHistorial_ing() {
-		return historial_ing;
+	public void setId_historial_ing(long id_historial_ing) {
+		this.id_historial_ing = id_historial_ing;
 	}
-
-	public void setHistorial_ing(long historial_ing) {
-		this.historial_ing = historial_ing;
-	}
-
-	
 
 	public String getEstado_fisico() {
 		return estado_fisico;
@@ -78,12 +66,12 @@ public class Historial_ing {
 		this.fecha_ingreso = fecha_ingreso;
 	}
 
-	public Usuario getuResponsable() {
-		return uResponsable;
+	public Usuario getId_responsable() {
+		return id_responsable;
 	}
 
-	public void setuResponsable(Usuario uResponsable) {
-		this.uResponsable = uResponsable;
+	public void setId_responsable(Usuario id_responsable) {
+		this.id_responsable = id_responsable;
 	}
 
 	public Departamento getId_departamento() {
@@ -109,6 +97,4 @@ public class Historial_ing {
 	public void setId_activo(Activo id_activo) {
 		this.id_activo = id_activo;
 	}
-	
-
 }

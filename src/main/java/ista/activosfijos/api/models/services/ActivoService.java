@@ -50,7 +50,7 @@ public class ActivoService implements IActivoService {
 	    	  activoActual.setImagen(activo.getImagen());
 	    	  activoActual.setDescripcion(activo.getDescripcion());
 	    	  activoActual.setCosto(activo.getCosto());
-	    	  activoActual.setEstado_Fisico(activo.getEstado_Fisico());
+	    	  activoActual.setEstado_fisico(activo.getEstado_fisico());
 	    	  activoActual.setDisponibilidad(activo.isDisponibilidad());
 	    	  activoRepository.save(activoActual);
 
