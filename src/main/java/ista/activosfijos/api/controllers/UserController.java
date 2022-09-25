@@ -64,7 +64,7 @@ public class UserController {
 
     //Metodos de Esteban ------------------------------------------------
 
-    @GetMapping
+    @GetMapping()
     public List<Usuario> listarUsuarios() {
         return iUsuarioService.findAllUsuario();
     }

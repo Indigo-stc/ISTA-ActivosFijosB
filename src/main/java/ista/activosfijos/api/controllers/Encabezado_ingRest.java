@@ -20,7 +20,7 @@ import ista.activosfijos.api.models.services.Encabezado_ingService;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RestController
-@RequestMapping("api/encabezadoIngresos/")
+@RequestMapping("/api/encabezadoIngresos")
 public class Encabezado_ingRest {
 
 

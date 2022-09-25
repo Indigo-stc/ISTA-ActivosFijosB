@@ -19,14 +19,14 @@ import ista.activosfijos.api.models.services.EdificiosService;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RestController
-@RequestMapping("api/edificios/")
+@RequestMapping("/api/edificios")
 
 public class EdificiosRest {
 	
 	@Autowired
 	private EdificiosService edificioService;
 	
-	@GetMapping("/listarEdificios/")
+	@GetMapping("/listarEdificios")
 	public List<Edificio> listarEdificios(){
 		return edificioService.findAllEdificio();
 	}
