@@ -61,6 +61,7 @@ public class UserController {
                 roles.add(r);
             }
         }
+        //AGREGA EL ROL SOLICITANTE POR DEFECTO
         Rol userRole = rolrepo.findbynombre("ROLE_SOLICITANTE");
         roles.add(userRole);
 
