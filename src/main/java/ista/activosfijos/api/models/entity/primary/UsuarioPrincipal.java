@@ -29,7 +29,7 @@ public class UsuarioPrincipal implements UserDetails {
 
     public static UsuarioPrincipal build(Usuario user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
-                .map(rol -> new SimpleGrantedAuthority(rol.getNombre().name()))
+                .map(rol -> new SimpleGrantedAuthority(rol.getNombre()))
                 .collect(Collectors.toList());
         return new UsuarioPrincipal(user.getId_usuario(),
                 user.getCedula(),

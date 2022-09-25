@@ -18,7 +18,6 @@ public class Rol {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id_rol;
-	@Enumerated(EnumType.STRING)
-	private ERol nombre;
+	private String nombre;
 
 }
