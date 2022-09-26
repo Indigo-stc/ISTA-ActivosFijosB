@@ -2,6 +2,7 @@ package ista.activosfijos.api.models.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,5 +54,16 @@ public class Detalle_ingService implements IDetalle_ingService{
 		}
 		return estadosRespuesta;
 	}
-	
+	// Update estado
+	public boolean updateDetalleAlRegistrarActivo(Detalle_ing detalle_ing) {
+		Optional<Detalle_ing> exists = detalle_ingRepository.findById(detalle_ing.getId_detalle_ing());
+		if (exists.isPresent()) {
+			Detalle_ing detalle_ingActual = exists.get();
+			detalle_ingActual.setEstado_detalle(detalle_ing.getEstado_detalle());
+			detalle_ingRepository.save(detalle_ingActual);
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

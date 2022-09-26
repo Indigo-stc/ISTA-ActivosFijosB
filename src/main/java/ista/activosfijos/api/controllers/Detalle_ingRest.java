@@ -2,15 +2,9 @@ package ista.activosfijos.api.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import ista.activosfijos.api.models.entity.primary.Detalle_ing;
 import ista.activosfijos.api.models.services.Detalle_ingService;
@@ -55,7 +49,15 @@ public class Detalle_ingRest {
 	@GetMapping(value = "/buscarDetalleIngresosPorId/{id}")
 	public Detalle_ing findById(@PathVariable("id") Long id) {
 		 return this.detalle_ingService.findByIdDetalle_ing(id);
-	}	
+	}
+// Detalle ingRest
+
+	@PutMapping("/actualizarDetalle")
+	public ResponseEntity<?> updateEdificio(@RequestBody Detalle_ing detalle_ing) {
+		detalle_ingService.updateDetalleAlRegistrarActivo(detalle_ing);
+		return new ResponseEntity<>(("Actualizado"), HttpStatus.CREATED);
+	}
+
 		
 
 }
