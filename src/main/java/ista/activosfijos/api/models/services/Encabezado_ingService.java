@@ -46,7 +46,7 @@ public class Encabezado_ingService implements IEncabezado_ingService{
 		 if (exists.isPresent()) {
 			 Encabezado_ing encabezado_ingActual = exists.get();
 			 encabezado_ingActual.setEstado(encabezado_ing.isEstado());
-			 encabezado_ingActual.setDocumento(encabezado_ing.getDocumento());
+			 //encabezado_ingActual.setDocumento(encabezado_ing.getDocumento());
 			 encabezado_ingRepository.save(encabezado_ingActual);
 		    return true;
 		    

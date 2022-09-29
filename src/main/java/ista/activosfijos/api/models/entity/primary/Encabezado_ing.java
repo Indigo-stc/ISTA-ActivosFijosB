@@ -2,13 +2,7 @@ package ista.activosfijos.api.models.entity.primary;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="Encabezado_ing")
@@ -19,13 +13,23 @@ public class Encabezado_ing {
 	private long id_encabezado_ing;
 	
 	private String num_recep;
+
+	@Column(name="fecha_ingreso")
+	@Temporal(TemporalType.DATE)
 	private Date fecha_ingreso;
+
+	@PrePersist
+	public void prePersist() {
+		fecha_ingreso = new Date();
+	}
 	private String Documento;
 	private boolean estado;
 	
 	@ManyToOne
 	@JoinColumn(name="id_procedencia")
 	private Procedencia procedencia;
+
+
 	
 	@ManyToOne
 	@JoinColumn(name="id_departamento")
@@ -45,11 +49,10 @@ public class Encabezado_ing {
 
 
 
-	public Encabezado_ing(String num_recep, Date fecha_ingreso, String documento, boolean estado,
+	public Encabezado_ing(String num_recep, String documento, boolean estado,
 			Procedencia procedencia, Departamento departamento, Usuario usuario) {
 		super();
 		this.num_recep = num_recep;
-		this.fecha_ingreso = fecha_ingreso;
 		Documento = documento;
 		this.estado = estado;
 		this.procedencia = procedencia;

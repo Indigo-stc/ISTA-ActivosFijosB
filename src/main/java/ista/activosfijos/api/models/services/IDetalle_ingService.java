@@ -17,4 +17,6 @@ public interface IDetalle_ingService {
 	public Detalle_ing findByIdDetalle_ing(Long id);
 				
 	public void eliminarDetalle_ing(Long id);
+
+	List<?>  contarLosDetallesTrue(Long id_encabezado_ing);
 }

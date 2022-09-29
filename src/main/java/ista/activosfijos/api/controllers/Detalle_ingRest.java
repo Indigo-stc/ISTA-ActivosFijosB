@@ -58,6 +58,11 @@ public class Detalle_ingRest {
 		return new ResponseEntity<>(("Actualizado"), HttpStatus.CREATED);
 	}
 
+
+	@GetMapping(value = "/ConteoDeDetalles/{id}")
+	public ResponseEntity<List<?>> findByConteoDeDetalles(@PathVariable("id") Long id) {
+		return ResponseEntity.ok(detalle_ingService.contarLosDetallesTrue(id));
+	}
 		
 
 }
