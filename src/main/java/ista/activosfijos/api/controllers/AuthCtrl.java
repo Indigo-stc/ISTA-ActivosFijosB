@@ -80,6 +80,8 @@ public class AuthCtrl {
                     .body(new UserInfoResponse(
                     userDetails.getId_usuario(),
                     userDetails.getCorreo(),
+                    userDetails.getNombres(),
+                    userDetails.getApellidos(),
                     roles));
         }else{
             return ResponseEntity

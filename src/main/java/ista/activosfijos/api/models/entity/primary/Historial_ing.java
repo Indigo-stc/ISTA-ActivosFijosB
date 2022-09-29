@@ -4,14 +4,7 @@ import lombok.*;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="historial_ing")
@@ -21,7 +14,14 @@ public class Historial_ing {
 	private long id_historial_ing;
 	
 	private String estado_fisico;
+	@Column(name="fecha_ingreso")
+	@Temporal(TemporalType.DATE)
 	private Date fecha_ingreso;
+
+	@PrePersist
+	public void prePersist() {
+		fecha_ingreso = new Date();
+	}
 	
 	@ManyToOne
 	@JoinColumn(name="id_usuario")

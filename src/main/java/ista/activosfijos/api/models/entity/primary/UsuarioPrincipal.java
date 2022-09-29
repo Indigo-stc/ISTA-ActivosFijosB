@@ -39,7 +39,6 @@ public class UsuarioPrincipal implements UserDetails {
                 user.getContrasenia(),
                 authorities);
     }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;

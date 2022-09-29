@@ -15,4 +15,9 @@ public interface Detalle_ingRepository extends JpaRepository<Detalle_ing, Long>{
 	)
 	List<Detalle_ing> findBynum_recep(String num_recep);
 
+	@Query(value = "SELECT count(d.id_detalle_ing) FROM detalle_ing d WHERE d.id_encabezado_ing = ? AND d.estado_detalle = false",
+			nativeQuery = true
+	)
+	List<?> contarLosDetalles(Long id_encabezado_ing);
+
 }

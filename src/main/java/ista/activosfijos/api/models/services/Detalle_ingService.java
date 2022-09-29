@@ -66,4 +66,9 @@ public class Detalle_ingService implements IDetalle_ingService{
 			return false;
 		}
 	}
+
+	@Override
+	public List<?> contarLosDetallesTrue(Long id_encabezado_ing) {
+		return detalle_ingRepository.contarLosDetalles(id_encabezado_ing);
+	}
 }

@@ -12,5 +12,8 @@ import java.util.List;
 public class UserInfoResponse {
 	private Long id;
 	private String correo;
+	private String nombres;
+	private String apellidos;
 	private List<String> roles;
+
 }
