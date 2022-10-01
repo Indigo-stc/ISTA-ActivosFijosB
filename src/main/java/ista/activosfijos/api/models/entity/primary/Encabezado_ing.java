@@ -22,7 +22,9 @@ public class Encabezado_ing {
 	public void prePersist() {
 		fecha_ingreso = new Date();
 	}
-	private String Documento;
+	@ManyToOne
+	@JoinColumn(name="id_documento")
+	private File file;
 	private boolean estado;
 	
 	@ManyToOne
@@ -49,7 +51,7 @@ public class Encabezado_ing {
 
 
 
-	public Encabezado_ing(String num_recep, String documento, boolean estado,
+	/*public Encabezado_ing(String num_recep, String documento, boolean estado,
 			Procedencia procedencia, Departamento departamento, Usuario usuario) {
 		super();
 		this.num_recep = num_recep;
@@ -59,8 +61,19 @@ public class Encabezado_ing {
 		this.departamento = departamento;
 		this.usuario = usuario;
 		//Detalle_ing = detalle_ing;
-	}
+	}*/
 
+	public Encabezado_ing(long id_encabezado_ing, String num_recep, boolean estado,
+						  Procedencia procedencia, Departamento departamento, Usuario usuario, File file) {
+		super();
+		this.id_encabezado_ing = id_encabezado_ing;
+		this.num_recep = num_recep;
+		this.estado = estado;
+		this.procedencia = procedencia;
+		this.departamento = departamento;
+		this.usuario = usuario;
+		this.file = file;
+	}
 
 	public String getNum_recep() {
 		return num_recep;
@@ -92,13 +105,13 @@ public class Encabezado_ing {
 		this.fecha_ingreso = fecha_ingreso;
 	}
 
-	public String getDocumento() {
-		return Documento;
-	}
+		public File getFile() {
+			return file;
+		}
 
-	public void setDocumento(String documento) {
-		Documento = documento;
-	}
+		public void setFile(File file) {
+			this.file = file;
+		}
 
 	public boolean isEstado() {
 		return estado;

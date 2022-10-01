@@ -15,9 +15,9 @@ import ista.activosfijos.api.models.entity.primary.Asignacion_Custodio;
 import ista.activosfijos.api.models.services.Asignacion_custodioService;
 
 
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RestController
-@RequestMapping("/api/asignacionCustodioActivo/")
+@RequestMapping("/api/asignacionCustodioActivo")
 public class Asignacion_CustodioRest {
 
 	@Autowired
@@ -29,7 +29,7 @@ public class Asignacion_CustodioRest {
 	}
 	
 
-	@PostMapping("/guardarasignacionCustodioActivo/")
+	@PostMapping("/guardarasignacionCustodioActivo")
 	public Asignacion_Custodio guardarAsignacion_Custodio (@RequestBody Asignacion_Custodio asignacion_Custodio) {
 		return this.asignacioncustodioservice.guardarAsignacionCustodio(asignacion_Custodio);
 	}

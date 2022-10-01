@@ -1,13 +1,13 @@
 package ista.activosfijos.api.models.services;
 
-import java.util.List;
-import java.util.Optional;
+import ista.activosfijos.api.models.dao.primary.Encabezado_ingRepository;
+import ista.activosfijos.api.models.entity.primary.Encabezado_ing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ista.activosfijos.api.models.dao.primary.Encabezado_ingRepository;
-import ista.activosfijos.api.models.entity.primary.Encabezado_ing;
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -46,12 +46,18 @@ public class Encabezado_ingService implements IEncabezado_ingService{
 		 if (exists.isPresent()) {
 			 Encabezado_ing encabezado_ingActual = exists.get();
 			 encabezado_ingActual.setEstado(encabezado_ing.isEstado());
-			 //encabezado_ingActual.setDocumento(encabezado_ing.getDocumento());
+			 encabezado_ingActual.setFile(encabezado_ing.getFile());
 			 encabezado_ingRepository.save(encabezado_ingActual);
 		    return true;
 		    
 		} else {
 		    return false;
 	    }
+	}
+
+	@Override
+	public List<?> findBynombre_documento(String nombre_documento) {
+		// TODO Auto-generated method stub
+		return encabezado_ingRepository.findBynombre_documento(nombre_documento);
 	}
 }
