@@ -16,4 +16,6 @@ public interface IActivoService {
 	public Activo findByIdActivo(Long id);
 			
 	public void eliminarActivo(Long id);
+
+	List<?>  validarExistenciaCodigoActivo(String codigo_activo);
 }

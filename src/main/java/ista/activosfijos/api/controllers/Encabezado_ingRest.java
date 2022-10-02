@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,13 +48,20 @@ public class Encabezado_ingRest {
 	@GetMapping(value = "/buscarEncabezadoIngresosPorId/{id}")
 	public Encabezado_ing findById(@PathVariable("id") Long id) {
 		 return this.encabezado_ingService.findByIdEncabezado_ing(id);
-	}	
-	
-	
+	}
+
+
 	@PutMapping("/actualizarEstadoRecepcion")
-    public ResponseEntity<?> updateProcedencia(@RequestBody Encabezado_ing encabezado_ing) {
+	public ResponseEntity<?> updateProcedencia(@RequestBody Encabezado_ing encabezado_ing) {
 		encabezado_ingService.actualizarEstadoDeEncabezado(encabezado_ing);
-       return new ResponseEntity<>(("Actualizado"), HttpStatus.CREATED);
+		return new ResponseEntity<>(("Actualizado"), HttpStatus.CREATED);
+	}
+
+	//@Transactional
+	@PutMapping("/actualizarDocumentoRecepcion")
+	public ResponseEntity<?> updateProcedencia2(@RequestBody Encabezado_ing encabezado_ing) {
+		encabezado_ingService.actualizarDocumentoDeEncabezado(encabezado_ing);
+		return new ResponseEntity<>(("Actualizado"), HttpStatus.CREATED);
 	}
 
 	@GetMapping(value = "/Buscar_Nombre_documento/{nombre}")

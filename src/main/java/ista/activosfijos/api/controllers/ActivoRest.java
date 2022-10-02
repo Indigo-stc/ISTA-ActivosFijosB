@@ -50,6 +50,10 @@ public class ActivoRest {
 			activoService.updateActivo(activo);
 	       return new ResponseEntity<>(("Actualizado"), HttpStatus.CREATED);
 	}
-		
+
+	@GetMapping(value = "/validarExistenciaDeCodigoActivo/{codigo_activo}")
+	public ResponseEntity<List<?>> findByConteoDeDetalles(@PathVariable("codigo_activo") String codigo_activo) {
+		return ResponseEntity.ok(activoService.validarExistenciaCodigoActivo(codigo_activo));
+	}
 
 }

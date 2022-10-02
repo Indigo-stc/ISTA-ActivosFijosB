@@ -9,6 +9,7 @@ import ista.activosfijos.api.models.dao.primary.FileRepository;
 import ista.activosfijos.api.models.entity.primary.File;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 

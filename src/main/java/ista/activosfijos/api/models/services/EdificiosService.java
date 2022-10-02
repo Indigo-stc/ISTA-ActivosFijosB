@@ -52,4 +52,9 @@ public class EdificiosService  implements IEdificiosService {
 	        	return false;
 	     }
 	}
+
+	@Override
+	public List<?> validarExistenciaNombreEdificio(String nombre_edificio) {
+		return edificioRepository.validarNombreEdificio(nombre_edificio);
+	}
 }

@@ -15,4 +15,6 @@ public interface IEdificiosService {
 			
 	public void eliminarEdificio(Long id);
 
+	List<?>  validarExistenciaNombreEdificio(String nombre_edificio);
+
 }

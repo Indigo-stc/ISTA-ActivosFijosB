@@ -14,4 +14,9 @@ public interface DepartamentosRepository extends JpaRepository<Departamento, Lon
     )
     List<Departamento> buscarDepartamentoPorEdifico(long id);
 
+    @Query(value = "SELECT d.nombre_departamento FROM departamento d WHERE UPPER(d.nombre_departamento) = UPPER(?)",
+            nativeQuery = true
+    )
+    List<?> validarNombreDepartamento(String nombre_departamento);
+
 }

@@ -1,5 +1,9 @@
 package ista.activosfijos.api.models.entity.primary;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Cascade;
+
 import java.util.Date;
 
 import javax.persistence.*;
@@ -9,7 +13,7 @@ import javax.persistence.*;
 public class Encabezado_ing {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id_encabezado_ing;
 	
 	private String num_recep;
@@ -22,7 +26,12 @@ public class Encabezado_ing {
 	public void prePersist() {
 		fecha_ingreso = new Date();
 	}
-	@ManyToOne
+
+	//@ManyToOne(cascade = {CascadeType.ALL},fetch= FetchType.EAGER) //Vale pero se crea dos pero se ejecuta antes diii
+	//@ManyToOne(fetch= FetchType.LAZY, cascade={CascadeType.MERGE,CascadeType.PERSIST}) //Vale pero se crea dos sii
+	@ManyToOne(fetch= FetchType.LAZY)
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	//@JsonManagedReference
 	@JoinColumn(name="id_documento")
 	private File file;
 	private boolean estado;

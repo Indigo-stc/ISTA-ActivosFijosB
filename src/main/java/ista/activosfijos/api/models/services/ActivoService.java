@@ -59,4 +59,8 @@ public class ActivoService implements IActivoService {
 	        	return false;
 	     }
 	}
+	@Override
+	public List<?> validarExistenciaCodigoActivo(String codigo_activo) {
+		return activoRepository.validarCodigoActivos(codigo_activo);
+	}
 }
