@@ -22,7 +22,7 @@ public class Encabezado_ing {
 	public void prePersist() {
 		fecha_ingreso = new Date();
 	}
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="id_documento")
 	private File file;
 	private boolean estado;

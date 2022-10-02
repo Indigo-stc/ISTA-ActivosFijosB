@@ -2,23 +2,22 @@ package ista.activosfijos.api.models.entity.primary;
 
 public class FileResponse {
 
-	private String id_documento;
+    private long id_documento;
     private String nombre_documento;
     private Long size;
     private String url;
     private String contentType;
 
 
+    public long getId_documento() {
+        return id_documento;
+    }
 
-    public String getId_documento() {
-		return id_documento;
-	}
+    public void setId_documento(long id_documento) {
+        this.id_documento = id_documento;
+    }
 
-	public void setId_documento(String id_documento) {
-		this.id_documento = id_documento;
-	}
-
-	public String getNombre_documento() {
+    public String getNombre_documento() {
 		return nombre_documento;
 	}
 

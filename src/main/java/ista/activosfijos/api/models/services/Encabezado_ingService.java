@@ -39,20 +39,36 @@ public class Encabezado_ingService implements IEncabezado_ingService{
 	}
 	
 	// ACTUALIZAR SU EL ESTADO AL HACER EL REGISTRO DEL ACTIVO
-	
+
+	// ACTUALIZAR SU EL ESTADO AL HACER EL REGISTRO DEL ACTIVO
+
 	public boolean actualizarEstadoDeEncabezado(Encabezado_ing encabezado_ing) {
 		Optional<Encabezado_ing> exists = encabezado_ingRepository.findById(encabezado_ing.getId_encabezado_ing());
-		        
-		 if (exists.isPresent()) {
-			 Encabezado_ing encabezado_ingActual = exists.get();
-			 encabezado_ingActual.setEstado(encabezado_ing.isEstado());
-			 encabezado_ingActual.setFile(encabezado_ing.getFile());
-			 encabezado_ingRepository.save(encabezado_ingActual);
-		    return true;
-		    
+
+		if (exists.isPresent()) {
+			Encabezado_ing encabezado_ingActual = exists.get();
+			encabezado_ingActual.setEstado(encabezado_ing.isEstado());
+			encabezado_ingRepository.save(encabezado_ingActual);
+			return true;
+
 		} else {
-		    return false;
-	    }
+			return false;
+		}
+	}
+
+	@Transactional
+	public boolean actualizarDocumentoDeEncabezado(Encabezado_ing encabezado_ing) {
+		Optional<Encabezado_ing> exists = encabezado_ingRepository.findById(encabezado_ing.getId_encabezado_ing());
+
+		if (exists.isPresent()) {
+			Encabezado_ing encabezado_ingActual = exists.get();
+			encabezado_ingActual.setFile(encabezado_ing.getFile());
+			encabezado_ingRepository.save(encabezado_ingActual);
+			return true;
+
+		} else {
+			return false;
+		}
 	}
 
 	@Override
