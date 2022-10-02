@@ -70,4 +70,9 @@ public class DepartamentosService implements IDepartamentosService {
 	public List<Departamento> buscarDepartamentoPorEdifico(Long id) {
 		return departamentoRepository.buscarDepartamentoPorEdifico(id);
 	}
+
+	@Override
+	public List<?> validarExistenciaNombreDepartamento(String nombre_departamento) {
+		return departamentoRepository.validarNombreDepartamento(nombre_departamento);
+	}
 }

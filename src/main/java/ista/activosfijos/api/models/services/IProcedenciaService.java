@@ -17,5 +17,6 @@ public interface IProcedenciaService {
 				
 		public void eliminarProcedencia(Long id);
 
+		List<?>  validarExistenciaNombreProcedencia(String nombre_procedencia);
 
 }

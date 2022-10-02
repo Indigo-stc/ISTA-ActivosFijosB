@@ -57,5 +57,10 @@ public class ProcedenciaService implements IProcedenciaService {
 	        	return false;
 	     }
 	}
+
+	@Override
+	public List<?> validarExistenciaNombreProcedencia(String nombre_procedencia) {
+		return procedenciaRepository.validarNombreProcedencia(nombre_procedencia);
+	}
 	
 }

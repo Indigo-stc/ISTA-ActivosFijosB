@@ -53,5 +53,10 @@ public class ProcedenciaRest {
 			 procedenciaService.updateProcedencia(procedencia);
 		       return new ResponseEntity<>(("Actualizado"), HttpStatus.CREATED);
 		}
+
+	@GetMapping(value = "/validarExistenciaNombreProcedencia/{nombre_procedencia}")
+	public ResponseEntity<List<?>> findByNombreProcedencia(@PathVariable("nombre_procedencia") String nombre_procedencia) {
+		return ResponseEntity.ok(procedenciaService.validarExistenciaNombreProcedencia(nombre_procedencia));
+	}
 }
 

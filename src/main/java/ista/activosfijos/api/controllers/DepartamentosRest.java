@@ -59,4 +59,9 @@ public class DepartamentosRest {
 	public ResponseEntity<List<Departamento>> buscarDepartametoPorEdificio(@PathVariable("id") Long id) {
 		return ResponseEntity.ok(departamentoService.buscarDepartamentoPorEdifico(id));
 	}
+
+	@GetMapping(value = "/validarExistenciaNombreDepartamento/{nombre_departamento}")
+	public ResponseEntity<List<?>> findByNombreDepartamento(@PathVariable("nombre_departamento") String nombre_departamento) {
+		return ResponseEntity.ok(departamentoService.validarExistenciaNombreDepartamento(nombre_departamento));
+	}
 }

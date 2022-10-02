@@ -18,4 +18,6 @@ public interface IDepartamentosService {
 
 	List<Departamento> buscarDepartamentoPorEdifico(Long id);
 
+	List<?>  validarExistenciaNombreDepartamento(String nombre_departamento);
+
 }

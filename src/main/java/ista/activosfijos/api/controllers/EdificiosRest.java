@@ -51,8 +51,11 @@ public class EdificiosRest {
     public ResponseEntity<?> updateEdificio(@RequestBody Edificio edificio) {
 		edificioService.updateEdificio(edificio);
        return new ResponseEntity<>(("Actualizado"), HttpStatus.CREATED);
-	}	
-		
-	
+	}
+
+	@GetMapping(value = "/validarExistenciaNombreEdificio/{nombre_edificio}")
+	public ResponseEntity<List<?>> findByNombreEdificio(@PathVariable("nombre_edificio") String nombre_edificio) {
+		return ResponseEntity.ok(edificioService.validarExistenciaNombreEdificio(nombre_edificio));
+	}
 
 }
