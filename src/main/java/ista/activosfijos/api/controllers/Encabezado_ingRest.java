@@ -54,7 +54,12 @@ public class Encabezado_ingRest {
     public ResponseEntity<?> updateProcedencia(@RequestBody Encabezado_ing encabezado_ing) {
 		encabezado_ingService.actualizarEstadoDeEncabezado(encabezado_ing);
        return new ResponseEntity<>(("Actualizado"), HttpStatus.CREATED);
-}
-		
+	}
+
+	@GetMapping(value = "/Buscar_Nombre_documento/{nombre}")
+	public ResponseEntity<List<?>> Buscar_Nombre_documento(@PathVariable("nombre") String nombre_documento) {
+		return ResponseEntity.ok(encabezado_ingService.findBynombre_documento(nombre_documento));
+	}
+
 	
 }

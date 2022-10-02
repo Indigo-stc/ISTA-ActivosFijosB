@@ -2,13 +2,7 @@ package ista.activosfijos.api.models.entity.primary;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="Asignacion_Custodio")
@@ -16,8 +10,20 @@ public class Asignacion_Custodio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id_asignacion_Custodio;
-	private Date Fecha_asignacion;
-	private Date Fecha_fin;
+
+	@Column(name="fecha_asignacion")
+	@Temporal(TemporalType.DATE)
+	private Date fecha_asignacion;
+
+	@PrePersist
+	public void prePersist() {
+		fecha_asignacion = new Date();
+		//fecha_fin = new Date();
+	};
+
+	@Column(name="fecha_fin")
+	@Temporal(TemporalType.DATE)
+	private Date fecha_fin;
 	
 	@ManyToOne
 	@JoinColumn(name="id_activo")
@@ -31,10 +37,8 @@ public class Asignacion_Custodio {
 		super();
 	}
 
-	public Asignacion_Custodio(Date fecha_asignacion, Date fecha_fin, Activo id_activo, Usuario id_Ucustodio) {
-		super();
-		Fecha_asignacion = fecha_asignacion;
-		Fecha_fin = fecha_fin;
+	public Asignacion_Custodio(Date fecha_fin, Activo id_activo, Usuario id_Ucustodio) {
+		this.fecha_fin = fecha_fin;
 		this.id_activo = id_activo;
 		this.id_Ucustodio = id_Ucustodio;
 	}
@@ -48,19 +52,19 @@ public class Asignacion_Custodio {
 	}
 
 	public Date getFecha_asignacion() {
-		return Fecha_asignacion;
+		return fecha_asignacion;
 	}
 
 	public void setFecha_asignacion(Date fecha_asignacion) {
-		Fecha_asignacion = fecha_asignacion;
+		this.fecha_asignacion = fecha_asignacion;
 	}
 
 	public Date getFecha_fin() {
-		return Fecha_fin;
+		return fecha_fin;
 	}
 
 	public void setFecha_fin(Date fecha_fin) {
-		Fecha_fin = fecha_fin;
+		fecha_fin = fecha_fin;
 	}
 
 	public Activo getId_activo() {
@@ -78,6 +82,4 @@ public class Asignacion_Custodio {
 	public void setId_Ucustodio(Usuario id_Ucustodio) {
 		this.id_Ucustodio = id_Ucustodio;
 	}
-	
-	
 }
