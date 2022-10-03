@@ -2,13 +2,7 @@ package ista.activosfijos.api.models.entity.primary;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name="Encabezado_Constatacion")
@@ -20,7 +14,14 @@ public class Encabezado_Constatacion {
 	private String nombres_Responsable;
 	private String Cedula_Responsable;
 	private String Observaciones;
+	@Column(name="fecha_Constatacion")
+	@Temporal(TemporalType.DATE)
 	private Date fecha_Constatacion;
+
+	@PrePersist
+	public void prePersist() {
+		fecha_Constatacion = new Date();
+	}
 	private int Cantactivos_Constatados;
 	private int Cantactivos_Noconstatados;
 	private boolean estado;
