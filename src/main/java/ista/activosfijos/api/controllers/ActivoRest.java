@@ -1,6 +1,8 @@
 package ista.activosfijos.api.controllers;
 
 import java.util.List;
+
+import ista.activosfijos.api.models.services.Activo_constatacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ista.activosfijos.api.models.entity.primary.Activo;
 import ista.activosfijos.api.models.services.ActivoService;
+import ista.activosfijos.api.models.entity.primary.activo_constatacion;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials="true")
 @RestController
@@ -24,7 +27,14 @@ public class ActivoRest {
 
 	@Autowired
 	private ActivoService activoService;
-	
+
+	@Autowired
+	private Activo_constatacionService activo_constatacionService;
+
+	@GetMapping("/listarActivos_constatacion/")
+	public List<activo_constatacion> listarActivos_constatacion(){
+		return activo_constatacionService.findAll();
+	}
 		@GetMapping("/listarActivos/")
 		public List<Activo> listarActivos(){
 			return activoService.findAllActivo();
